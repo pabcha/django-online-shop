@@ -64,3 +64,4 @@ target/
 # Others
 db.sqlite3
 migrations/
+media/
