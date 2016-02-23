@@ -7,8 +7,21 @@
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
   </head>
   <body>
+    <div class="">
+      <a href="{% url 'shop:product_list' %}">Home</a>
+    </div>
     <header>
-      header
+      {% with total_items=cart|length %}
+        {% if cart|length > 0 %}
+          Your cart:
+          <a href="{% url 'cart:cart_detail' %}">
+            {{ total_items }} item{{ total_items|pluralize }},
+            ${{ cart.get_total_price }}
+          </a>
+        {% else %}
+          Your cart is empty.
+        {% endif %}
+      {% endwith %}
     </header>
     {% block content %}
     {% endblock %}
