@@ -2,6 +2,8 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from shop.models import Product
 from coupons.models import Coupon
+from decimal import Decimal
+
 
 class Order(models.Model):
     first_name = models.CharField(max_length=50)
