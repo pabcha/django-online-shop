@@ -7,24 +7,36 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
   </head>
   <body>
-    <div class="">
-      <a href="{% url 'shop:product_list' %}">Home</a>
-    </div>
-    <header>
-      {% with total_items=cart|length %}
-        {% if cart|length > 0 %}
-          Your cart:
-          <a href="{% url 'cart:cart_detail' %}">
-            {{ total_items }} item{{ total_items|pluralize }},
-            ${{ cart.get_total_price }}
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="{% url 'shop:product_list' %}">
+            MyShop
           </a>
-        {% else %}
-          Your cart is empty.
-        {% endif %}
-      {% endwith %}
-    </header>
-    {% block content %}
-    {% endblock %}
+        </div>
+        <p class="navbar-text">Ahorra dinero viví mejor</p>
+
+        {% with total_items=cart|length %}
+          {% if cart|length > 0 %}
+          <p class="navbar-text navbar-right">
+            <span style="font-size:16px" class="glyphicon glyphicon-shopping-cart"></span>
+            <a href="{% url 'cart:cart_detail' %}">
+              {{ total_items }} item{{ total_items|pluralize }},
+              ${{ cart.get_total_price }}
+            </a>
+          </p>
+          {% else %}
+            Your cart is empty.
+          {% endif %}
+        {% endwith %}
+      </div>
+    </nav>
+
+    <div class="container">
+      {% block content %}
+      {% endblock %}
+    </div>
+
 
     <script src="{% static 'js/jquery.min.js' %}" charset="utf-8"></script>
     <script src="{% static 'js/bootstrap.min.js' %}" charset="utf-8"></script>

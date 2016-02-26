@@ -6,20 +6,34 @@
 {% endblock %}
 
 {% block content %}
-  <div class="">
-      <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/noimage.jpg' %}{% endif %}" />
-      <h1>{{ product.name }}</h1>
-      <h2>
-        <a href="{{ product.category.get_absolute_url}}">
-          {{ product.category }}
-        </a>
-      </h2>
-      <p>${{ product.price }}</p>
-      <form action="{% url 'cart:cart_add' product.id %}" method="post">
-        {{ cart_product_form }}
-        {% csrf_token %}
-        <input type="submit" value="Add to cart">
-      </form>
-      {{ product.description|linebreaks }}
+  <div class="row">
+    <div class="col-md-4">
+      <img class="img-responsive" src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/noimage.jpg' %}{% endif %}" />
+    </div>
+
+    <div class="col-md-8">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <h3>{{ product.name }}</h3>
+          <p>
+            <a href="{{ product.category.get_absolute_url}}">
+              {{ product.category }}
+            </a>
+          </p>
+          <p style="font-size:20px;color:#d9534f">${{ product.price }}</p>
+
+          <form action="{% url 'cart:cart_add' product.id %}" method="post">
+            {{ cart_product_form }}
+            {% csrf_token %}
+            <input class="btn btn-primary" type="submit" value="Add to cart">
+          </form>
+
+          <div style="margin-top:20px;">
+            {{ product.description|linebreaks }}
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 {% endblock %}
