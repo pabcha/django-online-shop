@@ -1,4 +1,5 @@
 {% extends 'shop/base.html' %}
+{% load widget_tweaks %}
 
 {% block title %}
   Checkout
@@ -7,28 +8,53 @@
 {% block content %}
   <h1>Checkout</h1>
 
-  <div class="">
-    <h3>Your order</h3>
-    <ul>
-      {% for item in cart %}
-        <li>
-          {{ item.quantity }}x {{ item.product.name }}
-          <span>${{ item.total_price }}</span>
-        </li>
-      {% endfor %}
-      {% if cart.coupon %}
-        <li>
-          "{{ cart.coupon.code }}" ({{ cart.coupon.discount }}% off)
-          <span>- ${{ cart.get_discount|floatformat:"2"}}</span>
-        </li>
-      {% endif %}
-    </ul>
-    <p>Total: ${{ cart.get_total_price_after_discount|floatformat:"2" }}</p>
+  <div class="row">
+
+    <div class="row">
+      <div style="margin-left: 150px; margin-bottom: 40px;">
+        <h3>Your order</h3>
+
+        <ul>
+          {% for item in cart %}
+            <li>
+              {{ item.quantity }}x {{ item.product.name }}
+              <span>${{ item.total_price }}</span>
+            </li>
+          {% endfor %}
+          {% if cart.coupon %}
+            <li>
+              "{{ cart.coupon.code }}" ({{ cart.coupon.discount }}% off)
+              <span>- ${{ cart.get_discount|floatformat:"2"}}</span>
+            </li>
+          {% endif %}
+        </ul>
+        <p><strong style="font-size:20px">Total:</strong> <span style="font-size:20px;color: #337ab7">${{ cart.get_total_price_after_discount|floatformat:"2" }}</span></p>
+      </div>
+    </div>
+
+    <div class="row">
+      <form action="." class="form-horizontal" method="post">
+        {% csrf_token %}
+
+        {% for field in form %}
+          <div class="form-group">
+            <label class="control-label col-sm-2 " for="{{ field.id_for_label }}">{{ field.label }}</label>
+            <div class="controls col-sm-6">
+              {% render_field field class="form-control" %}
+            </div>
+            <span style="color:red">{{ field.errors.as_text }}</span>
+          </div>
+        {% endfor %}
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <input type="submit" value="Place order" class="btn btn-primary">
+          </div>
+        </div>
+      </form>
+    </div>
+
   </div>
 
-  <form action="." method="post">
-    {{ form.as_p }}
-    <p><input type="submit" value="Place order"></p>
-    {% csrf_token %}
-  </form>
+
 {% endblock %}
