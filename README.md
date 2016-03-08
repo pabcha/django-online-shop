@@ -1,5 +1,11 @@
-# django-online-shop
-Online shop application made with Django Framework
+# Carrito de compras con el framework Django
+Esta es una aplicación web hecha con Django + Python. 
+
+## Caracteristicas
+- Registrar productos
+- Mostrar productos por categorias
+- Realizar ordenes de compra
+- Carrito de compras
 
 ## Requisitos
 ```sh
